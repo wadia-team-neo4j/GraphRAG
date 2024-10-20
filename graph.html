@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": "e01fc35874a5cbc1ffdcaee4bacdba8e", "label": "e01fc35874a5cbc1ffdcaee4bacdba8e", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Chatrapati Shivaji Maharaj", "label": "Chatrapati Shivaji Maharaj", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Jijau Saheb", "label": "Jijau Saheb", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Mauli", "label": "Mauli", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Shiva Raya", "label": "Shiva Raya", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Bhimaji Pandit", "label": "Bhimaji Pandit", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Saibai Nimbalkar", "label": "Saibai Nimbalkar", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Sagunabai", "label": "Sagunabai", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Soyrabai", "label": "Soyrabai", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Putalabai", "label": "Putalabai", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Lakshmibai", "label": "Lakshmibai", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Sakwarbai", "label": "Sakwarbai", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Kashibai", "label": "Kashibai", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Gunwantabai", "label": "Gunwantabai", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Dadaji Narasprabhu", "label": "Dadaji Narasprabhu", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Ranje Village", "label": "Ranje Village", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Torana", "label": "Torana", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Tukaram Maharaj", "label": "Tukaram Maharaj", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Thane Of Shirwal", "label": "Thane Of Shirwal", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Subhanmangal Fort", "label": "Subhanmangal Fort", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Daulatrao More", "label": "Daulatrao More", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Siddi Amber Wahab", "label": "Siddi Amber Wahab", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Kondhana", "label": "Kondhana", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Murumbadev\u0027S Mountain", "label": "Murumbadev\u0027S Mountain", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Rajgad", "label": "Rajgad", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Pune Jahagiri", "label": "Pune Jahagiri", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Sinhagad Fort", "label": "Sinhagad Fort", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Fort Of Purandar", "label": "Fort Of Purandar", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Fateh Khan", "label": "Fateh Khan", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Musadabaksh", "label": "Musadabaksh", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Bangalore", "label": "Bangalore", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "87ca5d2508d151153bf2ba5e0a7adeae", "label": "87ca5d2508d151153bf2ba5e0a7adeae", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Reverend Escaliot", "label": "Reverend Escaliot", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Parakaldasa", "label": "Parakaldasa", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Thevana", "label": "Thevana", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Abb\u00e9 Carr\u00e9", "label": "Abb\u00e9 Carr\u00e9", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Henry Oxendon", "label": "Henry Oxendon", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Cosm Da Gardra", "label": "Cosm Da Gardra", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "f17513b0d2fceb7868345fa7a17a2ef3", "label": "f17513b0d2fceb7868345fa7a17a2ef3", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": "f45e4aa9bb720e2b7bc00e4335f09b45", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "John Child", "label": "John Child", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Narayan Shenvi", "label": "Narayan Shenvi", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Rajmata Jijau", "label": "Rajmata Jijau", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Mahadji Naik Nimbalkar", "label": "Mahadji Naik Nimbalkar", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Ranubai", "label": "Ranubai", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Ambikabai", "label": "Ambikabai", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Harjiraje Mahadik", "label": "Harjiraje Mahadik", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Rajaram", "label": "Rajaram", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Kamalabai", "label": "Kamalabai", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Janoji Palkar", "label": "Janoji Palkar", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Nanibai", "label": "Nanibai", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Ganoji Shirke", "label": "Ganoji Shirke", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Pratap Chakraborty Maharajadhiraj", "label": "Pratap Chakraborty Maharajadhiraj", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "King Sinharaj", "label": "King Sinharaj", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Lyas", "label": "Lyas", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Sakhubai", "label": "Sakhubai", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Jadhavs", "label": "Jadhavs", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "91c8d5903289b05f96bb4915f14e1fc5", "label": "91c8d5903289b05f96bb4915f14e1fc5", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Maharashtra", "label": "Maharashtra", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "9c202b95be6d4f2c8fee2779dc8f0bf7", "label": "9c202b95be6d4f2c8fee2779dc8f0bf7", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Bararao", "label": "Bararao", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Mankai More", "label": "Mankai More", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Krishnaji Baji Chandrarao More", "label": "Krishnaji Baji Chandrarao More", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Wazir Mustafa Khan", "label": "Wazir Mustafa Khan", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Shahjiraje Bhosle", "label": "Shahjiraje Bhosle", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Afzal Khan", "label": "Afzal Khan", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Sambhaji Raje", "label": "Sambhaji Raje", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Konhoji Naik Jedhe", "label": "Konhoji Naik Jedhe", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Muradbaksh", "label": "Muradbaksh", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Firangoji Narsalkar", "label": "Firangoji Narsalkar", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Netaji Palkar", "label": "Netaji Palkar", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Haibatrao Shilamkar", "label": "Haibatrao Shilamkar", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Niloji Mahadji Saranaik Chandra Rao Morya", "label": "Niloji Mahadji Saranaik Chandra Rao Morya", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Shahajiraje Bhosle", "label": "Shahajiraje Bhosle", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"from": "e01fc35874a5cbc1ffdcaee4bacdba8e", "label": null, "to": "Chatrapati Shivaji Maharaj", "width": 1}, {"from": "e01fc35874a5cbc1ffdcaee4bacdba8e", "label": null, "to": "Jijau Saheb", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Jijau Saheb", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Mauli", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Shiva Raya", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Bhimaji Pandit", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Saibai Nimbalkar", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Sagunabai", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Soyrabai", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Putalabai", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Lakshmibai", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Sakwarbai", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Kashibai", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Gunwantabai", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Dadaji Narasprabhu", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Ranje Village", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Torana", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Tukaram Maharaj", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Thane Of Shirwal", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Subhanmangal Fort", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Daulatrao More", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Siddi Amber Wahab", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Kondhana", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Murumbadev\u0027S Mountain", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Rajgad", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Pune Jahagiri", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Sinhagad Fort", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Fort Of Purandar", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Fateh Khan", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Musadabaksh", "width": 1}, {"from": "Chatrapati Shivaji Maharaj", "label": null, "to": "Bangalore", "width": 1}, {"from": "87ca5d2508d151153bf2ba5e0a7adeae", "label": null, "to": "Chatrapati Shivaji Maharaj", "width": 1}, {"from": "87ca5d2508d151153bf2ba5e0a7adeae", "label": null, "to": "Jijau Saheb", "width": 1}, {"from": "87ca5d2508d151153bf2ba5e0a7adeae", "label": null, "to": "Reverend Escaliot", "width": 1}, {"from": "87ca5d2508d151153bf2ba5e0a7adeae", "label": null, "to": "Parakaldasa", "width": 1}, {"from": "87ca5d2508d151153bf2ba5e0a7adeae", "label": null, "to": "Thevana", "width": 1}, {"from": "87ca5d2508d151153bf2ba5e0a7adeae", "label": null, "to": "Abb\u00e9 Carr\u00e9", "width": 1}, {"from": "87ca5d2508d151153bf2ba5e0a7adeae", "label": null, "to": "Henry Oxendon", "width": 1}, {"from": "87ca5d2508d151153bf2ba5e0a7adeae", "label": null, "to": "Cosm Da Gardra", "width": 1}, {"from": "f17513b0d2fceb7868345fa7a17a2ef3", "label": null, "to": "Chatrapati Shivaji Maharaj", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Chatrapati Shivaji Maharaj", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Bhimaji Pandit", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "John Child", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Narayan Shenvi", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Saibai Nimbalkar", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Sagunabai", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Soyrabai", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Putalabai", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Lakshmibai", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Sakwarbai", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Kashibai", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Gunwantabai", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Rajmata Jijau", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Mahadji Naik Nimbalkar", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Ranubai", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Ambikabai", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Harjiraje Mahadik", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Rajaram", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Kamalabai", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Janoji Palkar", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Nanibai", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Ganoji Shirke", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Pratap Chakraborty Maharajadhiraj", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "King Sinharaj", "width": 1}, {"from": "f45e4aa9bb720e2b7bc00e4335f09b45", "label": null, "to": "Lyas", "width": 1}, {"from": "Rajmata Jijau", "label": null, "to": "Chatrapati Shivaji Maharaj", "width": 1}, {"from": "Mahadji Naik Nimbalkar", "label": null, "to": "Sakhubai", "width": 1}, {"from": "Ranubai", "label": null, "to": "Jadhavs", "width": 1}, {"from": "Ambikabai", "label": null, "to": "Harjiraje Mahadik", "width": 1}, {"from": "Rajaram", "label": null, "to": "Kamalabai", "width": 1}, {"from": "Nanibai", "label": null, "to": "Ganoji Shirke", "width": 1}, {"from": "91c8d5903289b05f96bb4915f14e1fc5", "label": null, "to": "Maharashtra", "width": 1}, {"from": "9c202b95be6d4f2c8fee2779dc8f0bf7", "label": null, "to": "Chatrapati Shivaji Maharaj", "width": 1}, {"from": "9c202b95be6d4f2c8fee2779dc8f0bf7", "label": null, "to": "Dadaji Narasprabhu", "width": 1}, {"from": "9c202b95be6d4f2c8fee2779dc8f0bf7", "label": null, "to": "Tukaram Maharaj", "width": 1}, {"from": "9c202b95be6d4f2c8fee2779dc8f0bf7", "label": null, "to": "Daulatrao More", "width": 1}, {"from": "9c202b95be6d4f2c8fee2779dc8f0bf7", "label": null, "to": "Bararao", "width": 1}, {"from": "9c202b95be6d4f2c8fee2779dc8f0bf7", "label": null, "to": "Siddi Amber Wahab", "width": 1}, {"from": "9c202b95be6d4f2c8fee2779dc8f0bf7", "label": null, "to": "Mankai More", "width": 1}, {"from": "9c202b95be6d4f2c8fee2779dc8f0bf7", "label": null, "to": "Krishnaji Baji Chandrarao More", "width": 1}, {"from": "9c202b95be6d4f2c8fee2779dc8f0bf7", "label": null, "to": "Wazir Mustafa Khan", "width": 1}, {"from": "9c202b95be6d4f2c8fee2779dc8f0bf7", "label": null, "to": "Shahjiraje Bhosle", "width": 1}, {"from": "9c202b95be6d4f2c8fee2779dc8f0bf7", "label": null, "to": "Fateh Khan", "width": 1}, {"from": "9c202b95be6d4f2c8fee2779dc8f0bf7", "label": null, "to": "Musadabaksh", "width": 1}, {"from": "9c202b95be6d4f2c8fee2779dc8f0bf7", "label": null, "to": "Afzal Khan", "width": 1}, {"from": "9c202b95be6d4f2c8fee2779dc8f0bf7", "label": null, "to": "Sambhaji Raje", "width": 1}, {"from": "9c202b95be6d4f2c8fee2779dc8f0bf7", "label": null, "to": "Konhoji Naik Jedhe", "width": 1}, {"from": "9c202b95be6d4f2c8fee2779dc8f0bf7", "label": null, "to": "Muradbaksh", "width": 1}, {"from": "9c202b95be6d4f2c8fee2779dc8f0bf7", "label": null, "to": "Firangoji Narsalkar", "width": 1}, {"from": "9c202b95be6d4f2c8fee2779dc8f0bf7", "label": null, "to": "Netaji Palkar", "width": 1}, {"from": "9c202b95be6d4f2c8fee2779dc8f0bf7", "label": null, "to": "Haibatrao Shilamkar", "width": 1}, {"from": "9c202b95be6d4f2c8fee2779dc8f0bf7", "label": null, "to": "Niloji Mahadji Saranaik Chandra Rao Morya", "width": 1}, {"from": "Krishnaji Baji Chandrarao More", "label": null, "to": "Mankai More", "width": 1}, {"from": "Wazir Mustafa Khan", "label": null, "to": "Shahjiraje Bhosle", "width": 1}, {"from": "Afzal Khan", "label": null, "to": "Shahajiraje Bhosle", "width": 1}, {"from": "Konhoji Naik Jedhe", "label": null, "to": "Shahajiraje Bhosle", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

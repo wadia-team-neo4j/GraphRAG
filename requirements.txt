@@ -1,0 +1,15 @@
+llama-index
+google-generativeai
+llama-index-llms-gemini
+pypdf
+python-dotenv
+IPython
+llama-index-embeddings-gemini
+streamlit
+
+neo4j-driver
+gradio
+langchain==0.1.16
+google-cloud-aiplatform
+langchain-community
+langchain-google-vertexai

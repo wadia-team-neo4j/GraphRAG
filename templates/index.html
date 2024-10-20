@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Query System</title>
+</head>
+<body>
+    <h1>Enter your question about a patient</h1>
+    <form method="POST" action="/">
+        <label for="query">Your Question:</label>
+        <input type="text" id="query" name="query" value="{{ query }}" required>
+        <button type="submit">Submit</button>
+    </form>
+    {% if answer %}
+        <h2>Answer:</h2>
+        <p>{{ answer }}</p>
+    {% endif %}
+</body>
+</html>
